@@ -54,9 +54,13 @@ public class Moeda {
         String[] centenasExtensas = {"cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"};
         String[] outros = {"cento", "mil", "milhões"};
         
-        for(int i = 0; i < reversedArr.length; i++){
+        CONVERT: for(int i = 0; i < reversedArr.length; i++){
             switch(i){
                 case 0:
+                    if (reversedArr.length > 1 && Integer.parseInt(reversedArr[1]) == 1){
+                        convertedValue[i] = entre10e20extenso[Integer.parseInt(reversedArr[i])-1];
+                        break CONVERT;
+                    }
                     convertedValue[i] = valoresExtensos[Integer.parseInt(reversedArr[i])];
                     break;
                 case 1:
@@ -68,7 +72,7 @@ public class Moeda {
         String[] deversedValue = new String[convertedValue.length];
         
         for(int i = 0; i < deversedValue.length;i++){
-            deversedValue[deversedValue.length-i-1] = convertedValue[i] ;
+            deversedValue[deversedValue.length-i-1] = convertedValue[i];
         }
         
         return String.join(" ", deversedValue);
