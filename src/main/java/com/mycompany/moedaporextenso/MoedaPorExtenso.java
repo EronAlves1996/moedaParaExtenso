@@ -14,5 +14,6 @@ public class MoedaPorExtenso {
     public static void main(String[] args) {
         Moeda moeda = new Moeda(25,4);
         System.out.println(moeda.getFracionario());
+        System.out.println(moeda.getInteiro());
     }
 }

@@ -5,6 +5,10 @@
 package com.mycompany.moedaporextenso;
 
 import java.util.Arrays;
+import static java.util.Collections.reverse;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -19,8 +23,8 @@ public class Moeda {
         this.setFracionario(f);
     }
 
-    public int getInteiro() {
-        return inteiro;
+    public String getInteiro() {
+        return porExtenso(this.inteiro);
     }
 
     public void setInteiro(int inteiro) {
@@ -37,9 +41,37 @@ public class Moeda {
     
     private String porExtenso(int arg){
         String[] int2StringArr = String.valueOf(arg).split("");
+        String[] reversedArr = new String[int2StringArr.length];
+        String[] convertedValue = new String[int2StringArr.length];
+        
+        for(int i = 0; i < reversedArr.length;i++){
+            reversedArr[reversedArr.length-i-1] = int2StringArr[i] ;
+        }
+        
         String[] valoresExtensos = {"zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"};
-        Object[] number2extenso = Arrays.stream(int2StringArr).map(n -> valoresExtensos[Integer.parseInt(n)]).toArray();
-        return number2extenso[0].toString();
+        String[] entre10e20extenso = {"onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"};
+        String[] dezenasExtensas = {"dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"};
+        String[] centenasExtensas = {"cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"};
+        String[] outros = {"cento", "mil", "milhões"};
+        
+        for(int i = 0; i < reversedArr.length; i++){
+            switch(i){
+                case 0:
+                    convertedValue[i] = valoresExtensos[Integer.parseInt(reversedArr[i])];
+                    break;
+                case 1:
+                    convertedValue[i] = dezenasExtensas[Integer.parseInt(reversedArr[i])-1];
+                    break;
+            }
+        }
+        
+        String[] deversedValue = new String[convertedValue.length];
+        
+        for(int i = 0; i < deversedValue.length;i++){
+            deversedValue[deversedValue.length-i-1] = convertedValue[i] ;
+        }
+        
+        return String.join(" ", deversedValue);
     }
     
     public String getValorCompleto(){
