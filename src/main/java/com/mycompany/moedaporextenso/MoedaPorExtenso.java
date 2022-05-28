@@ -12,6 +12,7 @@ package com.mycompany.moedaporextenso;
 public class MoedaPorExtenso {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Moeda moeda = new Moeda(25,4);
+        System.out.println(moeda.getFracionario());
     }
 }

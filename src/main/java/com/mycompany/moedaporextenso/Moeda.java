@@ -4,6 +4,8 @@
  */
 package com.mycompany.moedaporextenso;
 
+import java.util.Arrays;
+
 /**
  *
  * @author erona
@@ -13,8 +15,8 @@ public class Moeda {
     private int fracionario;
     
     Moeda(int i, int f){
-        inteiro = i;
-        fracionario = f;
+        this.setInteiro(i);
+        this.setFracionario(f);
     }
 
     public int getInteiro() {
@@ -25,8 +27,8 @@ public class Moeda {
         this.inteiro = inteiro;
     }
 
-    public int getFracionario() {
-        return fracionario;
+    public String getFracionario() {
+        return porExtenso(this.fracionario);
     }
 
     public void setFracionario(int fracionario) {
@@ -34,10 +36,13 @@ public class Moeda {
     }
     
     private String porExtenso(int arg){
-        return null;
+        String[] int2StringArr = String.valueOf(arg).split("");
+        String[] valoresExtensos = {"zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"};
+        Object[] number2extenso = Arrays.stream(int2StringArr).map(n -> valoresExtensos[Integer.parseInt(n)]).toArray();
+        return number2extenso[0].toString();
     }
     
     public String getValorCompleto(){
-        
+        return null;
     }
 }
