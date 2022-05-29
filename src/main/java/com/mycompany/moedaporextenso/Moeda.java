@@ -4,6 +4,10 @@
  */
 package com.mycompany.moedaporextenso;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  * @author erona
@@ -18,7 +22,42 @@ public class Moeda {
     }
 
     public String getInteiro() {
-        return porExtenso(this.inteiro);
+        String stringConverted = String.valueOf(inteiro);
+        String stringFormatted = "";
+        int stringFormattedLength = stringConverted.length();
+        int fields = 0;
+        List<String> splittedFields = new ArrayList<String>();
+        List<String> porExtensoResult = new ArrayList<String>();
+                
+        if(stringConverted.length() > 3){
+            fields = stringFormattedLength/3;
+            stringFormatted = reverseString(stringConverted);
+            
+            for(int i = 0; i <= fields; i++){
+                int initIndex = 3 * i;
+                int stringFormattedLengthVal = stringFormattedLength;
+                int finalIndexVal = 3 * ( i + 1 );
+                int finalIndex = stringFormattedLengthVal <= finalIndexVal ? stringFormattedLengthVal : finalIndexVal;
+                splittedFields.add(reverseString(stringFormatted.substring(initIndex, finalIndex)));
+                if(stringFormattedLengthVal == finalIndexVal) break;
+            }
+
+            for(int i = 0; i < splittedFields.size(); i++){
+                switch(i){
+                    case 0 -> {
+                    }
+                    case 1 -> porExtensoResult.add("mil");
+                    case 2 -> porExtensoResult.add("milhões");
+                }
+                porExtensoResult.add(porExtenso(Integer.parseInt(splittedFields.get(i))));
+            }
+            
+            Collections.reverse(porExtensoResult);
+        } else {
+            porExtensoResult.add(porExtenso(Integer.parseInt(stringConverted)));
+        }
+        porExtensoResult.add("reais");
+        return String.join(" ", porExtensoResult);
     }
 
     public void setInteiro(int inteiro) {
@@ -26,7 +65,7 @@ public class Moeda {
     }
 
     public String getFracionario() {
-        return porExtenso(this.fracionario);
+        return porExtenso(this.fracionario) + " centavos";
     }
 
     public void setFracionario(int fracionario) {
@@ -53,6 +92,9 @@ public class Moeda {
             switch(i){
                 case 0:
                     if (reversedArr.length > 1 && Integer.parseInt(reversedArr[1]) == 1){
+                        if(Integer.parseInt(reversedArr[0])==0) {
+                            break;
+                        }
                         convertedValue[i] = entre10e20extenso[Integer.parseInt(reversedArr[i])-1];
                         i++;
                         break;
@@ -60,10 +102,13 @@ public class Moeda {
                     convertedValue[i] = valoresExtensos[Integer.parseInt(reversedArr[i])];
                     break;
                 case 1:
+                    if (Integer.parseInt(reversedArr[i])-1 < 0) break;
                     convertedValue[i] = dezenasExtensas[Integer.parseInt(reversedArr[i])-1];
                     break;
                 case 2:
-                    if (Integer.parseInt(reversedArr[i]) == 1) {
+                    if (Integer.parseInt(reversedArr[0]) != 0 
+                            && Integer.parseInt(reversedArr[1]) != 0 
+                            && Integer.parseInt(reversedArr[i]) == 1) {
                         convertedValue[i] = outros[0];
                         break;
                     }
@@ -78,11 +123,21 @@ public class Moeda {
             deversedValue[deversedValue.length-i-1] = convertedValue[i];
         }
                         
-        String b4Output = String.join(" e ", deversedValue).replace("null e ", "");
+        String b4Output = String.join(" e ", deversedValue).replace("null e ", "").replace("e zero", "").replace("e null", "");
         return b4Output;
     }
     
+    private String reverseString(String s){
+        int stringLength = s.length();
+        String newStr = "";
+        for(int i = 0; i < stringLength; i++){
+            char ch = s.charAt(stringLength-1-i);
+            newStr += ch;
+        }
+        return newStr;
+    }
+    
     public String getValorCompleto(){
-        return null;
+        return getInteiro() + " " + getFracionario();
     }
 }
