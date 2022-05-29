@@ -4,12 +4,6 @@
  */
 package com.mycompany.moedaporextenso;
 
-import java.util.Arrays;
-import static java.util.Collections.reverse;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 /**
  *
  * @author erona
@@ -36,6 +30,7 @@ public class Moeda {
     }
 
     public void setFracionario(int fracionario) {
+        if(fracionario > 99) throw new Error("Forbidden Value");
         this.fracionario = fracionario;
     }
     
@@ -82,8 +77,9 @@ public class Moeda {
         for(int i = 0; i < deversedValue.length;i++){
             deversedValue[deversedValue.length-i-1] = convertedValue[i];
         }
-        
-        return String.join(" ", deversedValue);
+                        
+        String b4Output = String.join(" e ", deversedValue).replace("null e ", "");
+        return b4Output;
     }
     
     public String getValorCompleto(){
