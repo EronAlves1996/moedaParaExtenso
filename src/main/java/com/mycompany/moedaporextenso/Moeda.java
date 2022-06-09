@@ -7,6 +7,7 @@ package com.mycompany.moedaporextenso;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 /**
  *
@@ -26,8 +27,8 @@ public class Moeda {
         String stringFormatted = "";
         int stringFormattedLength = stringConverted.length();
         int fields = 0;
-        List<String> splittedFields = new ArrayList<String>();
-        List<String> porExtensoResult = new ArrayList<String>();
+        List<String> splittedFields = new ArrayList<>();
+        List<String> porExtensoResult = new ArrayList<>();
                 
         if(stringConverted.length() > 3){
             fields = stringFormattedLength/3;
@@ -38,7 +39,7 @@ public class Moeda {
                 int stringFormattedLengthVal = stringFormattedLength;
                 int finalIndexVal = 3 * ( i + 1 );
                 int finalIndex = stringFormattedLengthVal <= finalIndexVal ? stringFormattedLengthVal : finalIndexVal;
-                splittedFields.add(reverseString(stringFormatted.substring(initIndex, finalIndex)));
+                splittedFields.add(reverser(stringFormatted.substring(initIndex, finalIndex), Moeda::reverseString));
                 if(stringFormattedLengthVal == finalIndexVal) break;
             }
 
@@ -53,6 +54,7 @@ public class Moeda {
             }
             
             Collections.reverse(porExtensoResult);
+            
         } else {
             porExtensoResult.add(porExtenso(Integer.parseInt(stringConverted)));
         }
@@ -71,6 +73,10 @@ public class Moeda {
     public void setFracionario(int fracionario) {
         if(fracionario > 99) throw new Error("Forbidden Value");
         this.fracionario = fracionario;
+    }
+    
+    private String reverser(String str, UnaryOperator<String> fun){
+        return fun.apply(str);
     }
     
     private String porExtenso(int arg){
@@ -127,7 +133,7 @@ public class Moeda {
         return b4Output;
     }
     
-    private String reverseString(String s){
+    private static String reverseString(String s){
         int stringLength = s.length();
         String newStr = "";
         for(int i = 0; i < stringLength; i++){
