@@ -80,41 +80,11 @@ public class Moeda {
     }
     
     private String porExtenso(int arg){
-        String[] int2StringArr = String.valueOf(arg).split("");
-        String[] reversedArr = new String[int2StringArr.length];
+        String[] int2StringArr = int2stringConverter.reverser(String.valueOf(arg).split(""));
         String[] convertedValue = new String[int2StringArr.length];
-        
-        for(int i = 0; i < reversedArr.length;i++){
-            reversedArr[reversedArr.length-i-1] = int2StringArr[i] ;
-        }
                 
-        for(int i = 0; i < reversedArr.length; i++){
-            switch(i){
-                case 0:
-                    if (reversedArr.length > 1 && Integer.parseInt(reversedArr[1]) == 1){
-                        if(Integer.parseInt(reversedArr[0])==0) {
-                            break;
-                        }
-                        convertedValue[i] = entre10e20extenso[Integer.parseInt(reversedArr[i])-1];
-                        i++;
-                        break;
-                    }
-                    convertedValue[i] = valoresExtensos[Integer.parseInt(reversedArr[i])];
-                    break;
-                case 1:
-                    if (Integer.parseInt(reversedArr[i])-1 < 0) break;
-                    convertedValue[i] = dezenasExtensas[Integer.parseInt(reversedArr[i])-1];
-                    break;
-                case 2:
-                    if (Integer.parseInt(reversedArr[0]) != 0 
-                            && Integer.parseInt(reversedArr[1]) != 0 
-                            && Integer.parseInt(reversedArr[i]) == 1) {
-                        convertedValue[i] = outros[0];
-                        break;
-                    }
-                    convertedValue[i] = centenasExtensas[Integer.parseInt(reversedArr[i])-1];
-                    break;
-            }
+        for(int i = 0; i < int2StringArr.length; i++){
+            convertedValue[i] = int2stringConverter.matcher(int2StringArr, i);
         }
         
         String[] deversedValue = new String[convertedValue.length];
@@ -125,16 +95,6 @@ public class Moeda {
                         
         String b4Output = String.join(" e ", deversedValue).replace("null e ", "").replace("e zero", "").replace("e null", "");
         return b4Output;
-    }
-    
-    private static String reverseString(String s){
-        int stringLength = s.length();
-        String newStr = "";
-        for(int i = 0; i < stringLength; i++){
-            char ch = s.charAt(stringLength-1-i);
-            newStr += ch;
-        }
-        return newStr;
     }
     
     public String getValorCompleto(){

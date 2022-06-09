@@ -16,7 +16,7 @@ public class int2stringConverter {
     private static final String[] centenasExtensas = {"cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"};
     private static final String[] outros = {"cento"};
     
-    private static String reverser(String t){
+    public static String reverser(String t){
         int length = t.length();
         String newStr = "";
         for(int i = 0; i < length; i++){
@@ -26,13 +26,42 @@ public class int2stringConverter {
         return newStr;
     }
     
-    private static <T> T[] reverser(T[] t){
+    public static <T> T[] reverser(T[] t){
         int length = t.length;
         T[] newArr = (T[]) new Object[length];
         for(int i = 0; i<length;i++){
             newArr[i] = t[length-1-i];
         }
         return newArr;
+    }
+    
+    public static String matcher(String[] numberInArr, int index){
+        
+        switch(index){
+            
+            case 0:
+                if (numberInArr.length > 1 && Integer.parseInt(numberInArr[1]) == 1){
+                    if(Integer.parseInt(numberInArr[0]) == 0) {
+                        return "";
+                    }
+                    return entre10e20extenso[Integer.parseInt(numberInArr[index]) - 1];
+                }
+                return valoresExtensos[Integer.parseInt(numberInArr[index])];
+                
+            case 1:
+                if (Integer.parseInt(numberInArr[index])-1 < 0) return "";
+                return dezenasExtensas[Integer.parseInt(numberInArr[index]) - 1];
+                
+            case 2:
+                if (Integer.parseInt(numberInArr[0]) != 0 
+                        && Integer.parseInt(numberInArr[1]) != 0 
+                        && Integer.parseInt(numberInArr[index]) == 1) {
+                    return outros[0];
+                }
+                return centenasExtensas[Integer.parseInt(numberInArr[index]) - 1];
+                
+        }
+        return "";
     }
     
     
