@@ -84,12 +84,6 @@ public class Moeda {
         String[] reversedArr = new String[int2StringArr.length];
         String[] convertedValue = new String[int2StringArr.length];
         
-        String[] valoresExtensos = {"zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"};
-        String[] entre10e20extenso = {"onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"};
-        String[] dezenasExtensas = {"dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"};
-        String[] centenasExtensas = {"cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"};
-        String[] outros = {"cento"};
-        
         for(int i = 0; i < reversedArr.length;i++){
             reversedArr[reversedArr.length-i-1] = int2StringArr[i] ;
         }

@@ -4,6 +4,7 @@
  */
 package com.mycompany.moedaporextenso;
 
+
 /**
  *
  * @author erona
@@ -14,4 +15,25 @@ public class int2stringConverter {
     private static final String[] dezenasExtensas = {"dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"};
     private static final String[] centenasExtensas = {"cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"};
     private static final String[] outros = {"cento"};
+    
+    private static String reverser(String t){
+        int length = t.length();
+        String newStr = "";
+        for(int i = 0; i < length; i++){
+            char ch = t.charAt(length-1-i);
+            newStr += ch;
+        }
+        return newStr;
+    }
+    
+    private static <T> T[] reverser(T[] t){
+        int length = t.length;
+        T[] newArr = (T[]) new Object[length];
+        for(int i = 0; i<length;i++){
+            newArr[i] = t[length-1-i];
+        }
+        return newArr;
+    }
+    
+    
 }
