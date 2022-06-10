@@ -64,5 +64,21 @@ public class int2stringConverter {
         return "";
     }
     
+    public static int analyzer(String[] numberInArr){
+        if (!(numberInArr.length > 1)) return 0;
+        if(numberInArr.length > 3) throw new Error("Invalid Length");
+
+        if (
+                Integer.parseInt(numberInArr[1]) == 1 
+                && Integer.parseInt(numberInArr[0]) != 0
+           ) return 1;
+        
+        if (
+                Integer.parseInt(numberInArr[0]) == 0 
+                && Integer.parseInt(numberInArr[1]) == 0
+                ) return 2;
+        
+    }
+    
     
 }
