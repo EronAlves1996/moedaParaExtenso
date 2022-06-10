@@ -4,6 +4,10 @@
  */
 package com.mycompany.moedaporextenso;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.UnaryOperator;
+
 
 /**
  *
@@ -35,6 +39,14 @@ public class int2stringConverter {
         return newArr;
     }
     
+    /** Transforma uma string numérica em um array
+     * @param str Uma string numérica
+     * @return um array de strings numéricas
+     */
+    public static String[] transformer(String str){
+        return str.split("");
+    }
+    
     public static String matcher(String[] numberInArr, int index){
         
         switch(index){
@@ -64,6 +76,12 @@ public class int2stringConverter {
         return "";
     }
     
+    /** Analisa o array de strings fornecido para indicar
+     * a partir de qual index a função matcher irá combinar os números
+     * 
+     * @param numberInArr Array de strings numéricas (length máxima = 3)
+     * @return Um valor de índice
+     */
     public static int analyzer(String[] numberInArr){
         if (!(numberInArr.length > 1)) return 0;
         if(numberInArr.length > 3) throw new Error("Invalid Length");
@@ -77,8 +95,32 @@ public class int2stringConverter {
                 Integer.parseInt(numberInArr[0]) == 0 
                 && Integer.parseInt(numberInArr[1]) == 0
            ) return 2;
-        
     }
     
+    public static String model (UnaryOperator<String> t, String str){
+        return t.apply(str);
+    }
     
+    public static List<String> spliter(String numericString){
+        List<String> splittedFields = new ArrayList<>();
+        int fields = 0;
+        
+        if(numericString.length() > 3){
+            
+            fields = numericString.length()/3;
+            numericString = int2stringConverter.model(int2stringConverter::reverser, numericString);
+            
+            for(int i = 0; i <= fields; i++){
+                int initIndex = 3 * i;
+                int numericStringLength = numericString.length();
+                int finalIndexVal = 3 * ( i + 1 );
+                int finalIndex = numericStringLength <= finalIndexVal ? numericStringLength : finalIndexVal;
+                
+                splittedFields.add(numericString.substring(initIndex, finalIndex));
+                if(numericStringLength == finalIndexVal) break;
+            }
+        }
+        
+        return splittedFields;    
+    }
 }
