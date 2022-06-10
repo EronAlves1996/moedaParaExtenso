@@ -40,16 +40,16 @@ public class int2stringConverter {
         switch(index){
             
             case 0:
-                if (numberInArr.length > 1 && Integer.parseInt(numberInArr[1]) == 1){
-                    if(Integer.parseInt(numberInArr[0]) == 0) {
-                        return "";
-                    }
-                    return entre10e20extenso[Integer.parseInt(numberInArr[index]) - 1];
-                }
                 return valoresExtensos[Integer.parseInt(numberInArr[index])];
                 
             case 1:
-                if (Integer.parseInt(numberInArr[index])-1 < 0) return "";
+                if (Integer.parseInt(numberInArr[index]) - 1 < 0) return "";
+                
+                if (
+                        Integer.parseInt(numberInArr[1]) == 1 
+                        && !(Integer.parseInt(numberInArr[0]) == 0)
+                        ) return entre10e20extenso[Integer.parseInt(numberInArr[index]) - 1];
+                
                 return dezenasExtensas[Integer.parseInt(numberInArr[index]) - 1];
                 
             case 2:
@@ -76,7 +76,7 @@ public class int2stringConverter {
         if (
                 Integer.parseInt(numberInArr[0]) == 0 
                 && Integer.parseInt(numberInArr[1]) == 0
-                ) return 2;
+           ) return 2;
         
     }
     
