@@ -7,7 +7,8 @@ package com.mycompany.moedaporextenso;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.UnaryOperator;
-
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -122,5 +123,17 @@ public class int2stringConverter {
         }
         
         return splittedFields;    
+    }
+    
+    public static String converter(String str){
+        String[] arrString = int2stringConverter.transformer(str);
+        return IntStream
+                .range(int2stringConverter.analyzer(arrString), arrString.length)
+                .mapToObj(i -> int2stringConverter.matcher(arrString, i))
+                .collect(Collectors.joining(" "));
+    }
+    
+    public static String eager(List<String> splittedFields){
+        
     }
 }

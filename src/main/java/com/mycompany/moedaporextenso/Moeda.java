@@ -25,24 +25,8 @@ public class Moeda {
     public String getInteiro() {
         String stringConverted = String.valueOf(inteiro);
         String stringFormatted = "";
-        int stringFormattedLength = stringConverted.length();
-        int fields = 0;
-        List<String> splittedFields = new ArrayList<>();
-        List<String> porExtensoResult = new ArrayList<>();
-                
-        if(stringConverted.length() > 3){
-            fields = stringFormattedLength/3;
-            stringFormatted = reverseString(stringConverted);
-            
-            for(int i = 0; i <= fields; i++){
-                int initIndex = 3 * i;
-                int stringFormattedLengthVal = stringFormattedLength;
-                int finalIndexVal = 3 * ( i + 1 );
-                int finalIndex = stringFormattedLengthVal <= finalIndexVal ? stringFormattedLengthVal : finalIndexVal;
-                splittedFields.add(reverser(stringFormatted.substring(initIndex, finalIndex), Moeda::reverseString));
-                if(stringFormattedLengthVal == finalIndexVal) break;
-            }
-
+        List<String> porExtensoResult = new ArrayList<>();  
+        
             for(int i = 0; i < splittedFields.size(); i++){
                 switch(i){
                     case 0 -> {
