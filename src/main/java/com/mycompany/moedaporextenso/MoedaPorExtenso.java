@@ -12,7 +12,6 @@ package com.mycompany.moedaporextenso;
 public class MoedaPorExtenso {
 
     public static void main(String[] args) {
-        Moeda moeda = new Moeda(1100555,00);
-        System.out.println(moeda.getValorCompleto());
+        System.out.println(int2stringConverter.converter("432"));
     }
 }

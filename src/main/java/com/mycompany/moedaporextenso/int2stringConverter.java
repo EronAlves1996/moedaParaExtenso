@@ -5,6 +5,7 @@
 package com.mycompany.moedaporextenso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import java.util.stream.IntStream;
  *
  * @author erona
  */
-public class int2stringConverter {
+ public class int2stringConverter {
     private static final String[] valoresExtensos = {"zero", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"};
     private static final String[] entre10e20extenso = {"onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"};
     private static final String[] dezenasExtensas = {"dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"};
@@ -61,13 +62,13 @@ public class int2stringConverter {
                 if (
                         Integer.parseInt(numberInArr[1]) == 1 
                         && !(Integer.parseInt(numberInArr[0]) == 0)
-                        ) return entre10e20extenso[Integer.parseInt(numberInArr[index]) - 1];
+                        ) return entre10e20extenso[Integer.parseInt(numberInArr[0]) - 1];
                 
                 return dezenasExtensas[Integer.parseInt(numberInArr[index]) - 1];
                 
             case 2:
-                if (Integer.parseInt(numberInArr[0]) != 0 
-                        && Integer.parseInt(numberInArr[1]) != 0 
+                if ((Integer.parseInt(numberInArr[0]) != 0 
+                        || Integer.parseInt(numberInArr[1]) != 0) 
                         && Integer.parseInt(numberInArr[index]) == 1) {
                     return outros[0];
                 }
@@ -88,14 +89,17 @@ public class int2stringConverter {
         if(numberInArr.length > 3) throw new Error("Invalid Length");
 
         if (
-                Integer.parseInt(numberInArr[1]) == 1 
-                && Integer.parseInt(numberInArr[0]) != 0
+                (Integer.parseInt(numberInArr[1]) == 1 
+                && Integer.parseInt(numberInArr[0]) != 0)
+                || Integer.parseInt(numberInArr[0]) == 0
            ) return 1;
         
         if (
                 Integer.parseInt(numberInArr[0]) == 0 
                 && Integer.parseInt(numberInArr[1]) == 0
            ) return 2;
+        
+        return 0;
     }
     
     public static String model (UnaryOperator<String> t, String str){
@@ -127,13 +131,14 @@ public class int2stringConverter {
     
     public static String converter(String str){
         String[] arrString = int2stringConverter.transformer(str);
-        return IntStream
+        List<String> intermediateRepr =  IntStream
                 .range(int2stringConverter.analyzer(arrString), arrString.length)
                 .mapToObj(i -> int2stringConverter.matcher(arrString, i))
-                .collect(Collectors.joining(" "));
-    }
-    
-    public static String eager(List<String> splittedFields){
-        
+                .filter(i -> !(i.equals("")))
+                .collect(Collectors.toList());
+        Collections.reverse(intermediateRepr);
+        return intermediateRepr
+                .stream()
+                .collect(Collectors.joining(" e "));
     }
 }
