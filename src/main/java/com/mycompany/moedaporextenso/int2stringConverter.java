@@ -50,15 +50,14 @@ import java.util.stream.IntStream;
     }
     
     public static String matcher(String[] numberInArr, int index){
-        
+        if (Integer.parseInt(numberInArr[index]) - 1 < 0) return "";
+
         switch(index){
             
             case 0:
                 return valoresExtensos[Integer.parseInt(numberInArr[index])];
                 
             case 1:
-                if (Integer.parseInt(numberInArr[index]) - 1 < 0) return "";
-                
                 if (
                         Integer.parseInt(numberInArr[1]) == 1 
                         && !(Integer.parseInt(numberInArr[0]) == 0)
@@ -125,20 +124,64 @@ import java.util.stream.IntStream;
                 if(numericStringLength == finalIndexVal) break;
             }
         }
-        
+        System.out.println(splittedFields.toString());
         return splittedFields;    
     }
     
-    public static String converter(String str){
+    private static String converter(String str){
         String[] arrString = int2stringConverter.transformer(str);
         List<String> intermediateRepr =  IntStream
                 .range(int2stringConverter.analyzer(arrString), arrString.length)
                 .mapToObj(i -> int2stringConverter.matcher(arrString, i))
                 .filter(i -> !(i.equals("")))
-                .collect(Collectors.toList());
-        Collections.reverse(intermediateRepr);
+                .collect(Collectors.toList()); 
+       Collections.reverse(intermediateRepr);
         return intermediateRepr
                 .stream()
                 .collect(Collectors.joining(" e "));
+    }
+    
+    private static String attainGreatness(int value, int greatness){
+        switch(greatness){
+            case 0 -> {
+                return "";
+            }
+            case 1 -> {
+                return "mil";
+            }
+            case 2 -> {
+                if(value == 1) return "milhão";
+                return "milhões";
+            }
+            case 3 -> {
+                if(value == 1) return "bilhão";
+                return "bilhões";
+            }
+            default -> {
+                throw new Error("Grandeza não esperada");
+            }
+        }
+    }
+    
+    public static String finalGenerator(int number){
+        String stringNumber = Integer.toString(number);
+        List<String> splittedNumber = int2stringConverter.spliter(stringNumber);
+        List<String> intermediateList = IntStream
+                .range(0, splittedNumber.size())
+                .mapToObj(i -> { 
+                    String representation = 
+                            int2stringConverter.converter(splittedNumber.get(i)) 
+                            + " " + 
+                            int2stringConverter.attainGreatness(
+                                    Integer.parseInt(splittedNumber.get(i)),
+                                    i
+                                );
+                    if(i == 1) return representation.replace("um mil", "mil");
+                    return representation;
+                }
+                )
+                .collect(Collectors.toList());
+        Collections.reverse(intermediateList);
+        return intermediateList.stream().collect(Collectors.joining(", "));
     }
 }

@@ -12,6 +12,6 @@ package com.mycompany.moedaporextenso;
 public class MoedaPorExtenso {
 
     public static void main(String[] args) {
-        System.out.println(int2stringConverter.converter("432"));
+        System.out.println(int2stringConverter.finalGenerator(1001024));
     }
 }
