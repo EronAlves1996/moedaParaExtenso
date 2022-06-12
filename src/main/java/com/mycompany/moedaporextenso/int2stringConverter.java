@@ -123,6 +123,8 @@ import java.util.stream.IntStream;
                 splittedFields.add(numericString.substring(initIndex, finalIndex));
                 if(numericStringLength == finalIndexVal) break;
             }
+        } else {
+            splittedFields.add(int2stringConverter.model(int2stringConverter::reverser,numericString));
         }
         return splittedFields;    
     }
