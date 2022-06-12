@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
     private static final String[] centenasExtensas = {"cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"};
     private static final String[] outros = {"cento"};
     
-    public static String reverser(String t){
+    private static String reverser(String t){
         int length = t.length();
         String newStr = "";
         for(int i = 0; i < length; i++){
@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
         return newStr;
     }
     
-    public static <T> T[] reverser(T[] t){
+    private static <T> T[] reverser(T[] t){
         int length = t.length;
         T[] newArr = (T[]) new Object[length];
         for(int i = 0; i<length;i++){
@@ -45,11 +45,11 @@ import java.util.stream.IntStream;
      * @param str Uma string numérica
      * @return um array de strings numéricas
      */
-    public static String[] transformer(String str){
+    private static String[] transformer(String str){
         return str.split("");
     }
     
-    public static String matcher(String[] numberInArr, int index){
+    private static String matcher(String[] numberInArr, int index){
         if (Integer.parseInt(numberInArr[index]) - 1 < 0) return "";
 
         switch(index){
@@ -83,7 +83,7 @@ import java.util.stream.IntStream;
      * @param numberInArr Array de strings numéricas (length máxima = 3)
      * @return Um valor de índice
      */
-    public static int analyzer(String[] numberInArr){
+    private static int analyzer(String[] numberInArr){
         if (!(numberInArr.length > 1)) return 0;
         if(numberInArr.length > 3) throw new Error("Invalid Length");
 
@@ -101,11 +101,11 @@ import java.util.stream.IntStream;
         return 0;
     }
     
-    public static String model (UnaryOperator<String> t, String str){
+    private static String model (UnaryOperator<String> t, String str){
         return t.apply(str);
     }
     
-    public static List<String> spliter(String numericString){
+    private static List<String> spliter(String numericString){
         List<String> splittedFields = new ArrayList<>();
         int fields = 0;
         
@@ -124,7 +124,6 @@ import java.util.stream.IntStream;
                 if(numericStringLength == finalIndexVal) break;
             }
         }
-        System.out.println(splittedFields.toString());
         return splittedFields;    
     }
     
@@ -173,7 +172,7 @@ import java.util.stream.IntStream;
                             int2stringConverter.converter(splittedNumber.get(i)) 
                             + " " + 
                             int2stringConverter.attainGreatness(
-                                    Integer.parseInt(splittedNumber.get(i)),
+                                    Integer.parseInt(int2stringConverter.reverser(splittedNumber.get(i))),
                                     i
                                 );
                     if(i == 1) return representation.replace("um mil", "mil");
@@ -181,6 +180,33 @@ import java.util.stream.IntStream;
                 }
                 )
                 .collect(Collectors.toList());
+        
+        if(intermediateList.size() > 2){
+            List<String> lessThan1Million = IntStream
+                .range(0, 2)
+                .mapToObj(i -> intermediateList.get(i))
+                .collect(Collectors.toList());
+            List <String> moreThan1Million = IntStream
+                    .range(2, intermediateList.size())
+                    .mapToObj(i -> intermediateList.get(i))
+                    .collect(Collectors.toList());
+            
+            Collections.reverse(lessThan1Million);
+            Collections.reverse(moreThan1Million);
+            String string2BReturned = "";
+            
+            if(Integer.parseInt(int2stringConverter.reverser(splittedNumber.get(0))) <= 100){
+                string2BReturned = moreThan1Million
+                        .stream()
+                        .collect(Collectors.joining(", "));
+                string2BReturned += ", " + lessThan1Million
+                        .stream()
+                        .collect(Collectors.joining(" e "));
+                
+                return string2BReturned;
+            }
+        }
+        
         Collections.reverse(intermediateList);
         return intermediateList.stream().collect(Collectors.joining(", "));
     }
