@@ -22,6 +22,11 @@ import java.util.stream.IntStream;
     private static final String[] centenasExtensas = {"cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"};
     private static final String[] outros = {"cento"};
     
+    /**
+     * Retorna uma string de forma inversa
+     * @param t string original
+     * @return string invertida
+     */
     private static String reverser(String t){
         int length = t.length();
         String newStr = "";
@@ -32,6 +37,12 @@ import java.util.stream.IntStream;
         return newStr;
     }
     
+    /**
+     * Retorna um Array em ordem invertida
+     * @param <T> Aceita qualquer tipo de array
+     * @param t Array original
+     * @return Array invertido
+     */
     private static <T> T[] reverser(T[] t){
         int length = t.length;
         T[] newArr = (T[]) new Object[length];
@@ -41,7 +52,8 @@ import java.util.stream.IntStream;
         return newArr;
     }
     
-    /** Transforma uma string numérica em um array
+    /** 
+     * Transforma uma string numérica em um array
      * @param str Uma string numérica
      * @return um array de strings numéricas
      */
@@ -49,6 +61,13 @@ import java.util.stream.IntStream;
         return str.split("");
     }
     
+    /**
+     * Combina um valor de 0 a 9 contido em um array de strings numéricas com 
+     * seu índice indicando sua grandeza e sua correspondência por extenso
+     * @param numberInArr Array de string numérica
+     * @param index índice do array a ser combinado
+     * @return Correspondência por extenso
+     */
     private static String matcher(String[] numberInArr, int index){
         if (Integer.parseInt(numberInArr[index]) - 1 < 0) return "";
 
@@ -77,9 +96,9 @@ import java.util.stream.IntStream;
         return "";
     }
     
-    /** Analisa o array de strings fornecido para indicar
+    /** 
+     * Analisa o array de strings fornecido para indicar
      * a partir de qual index a função matcher irá combinar os números
-     * 
      * @param numberInArr Array de strings numéricas (length máxima = 3)
      * @return Um valor de índice
      */
@@ -101,10 +120,22 @@ import java.util.stream.IntStream;
         return 0;
     }
     
+    /**
+     * Providencia um modelo para aplicação de cálculos lambda
+     * @param t função lambda
+     * @param str string ao qual será aplicado a função lambda
+     * @return aplica a função lambda à string
+     */
     private static String model (UnaryOperator<String> t, String str){
         return t.apply(str);
     }
     
+    /**
+     * Inverte uma string numérica, além de serparar seus campos de grandeza 
+     * decimal partindo de centenas, milhares, milhões, bilhões, etc.
+     * @param numericString String numérica
+     * @return Lista de string numérica separada por grandeza
+     */
     private static List<String> spliter(String numericString){
         List<String> splittedFields = new ArrayList<>();
         int fields = 0;
@@ -129,6 +160,12 @@ import java.util.stream.IntStream;
         return splittedFields;    
     }
     
+    /**
+     * Executa a conversão de uma string numérica para seu correspondente por
+     * extenso, executando um pipeline com outras funções da classe
+     * @param str string numérica
+     * @return número por extenso
+     */
     private static String converter(String str){
         String[] arrString = int2stringConverter.transformer(str);
         List<String> intermediateRepr =  IntStream
@@ -142,6 +179,13 @@ import java.util.stream.IntStream;
                 .collect(Collectors.joining(" e "));
     }
     
+    /**
+     * Analisa um determinado valor junto com sua atribuição de grandeza retornar
+     * uma grandeza por extenso
+     * @param value valor numérico
+     * @param greatness grandeza (1 para milhares, 2 para milhões, etc..)
+     * @return retorna a grandeza por extenso
+     */
     private static String attainGreatness(int value, int greatness){
         switch(greatness){
             case 0 -> {
@@ -164,7 +208,14 @@ import java.util.stream.IntStream;
         }
     }
     
-    public static String finalGenerator(int number){
+    /**
+     * Função principal, que recebe um valor numérico e executa um pipeline 
+     * e executa conversões necessárias para retornar um valor completo por
+     * extenso
+     * @param number número a ser convertido dentro dos limites de Java
+     * @return Número por extenso
+     */
+    public static String convert(int number){
         String stringNumber = Integer.toString(number);
         List<String> splittedNumber = int2stringConverter.spliter(stringNumber);
         List<String> intermediateList = IntStream
