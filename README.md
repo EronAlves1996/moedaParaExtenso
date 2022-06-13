@@ -11,6 +11,6 @@ A classe é utilizada através do método #convert que aceita um argumento do ti
 ``````Java
 System.out.println(int2stringConverter.convert(24));
 // vinte e quatro
-System.out.println(in2stringConverter.convert(1_099));
+System.out.println(int2stringConverter.convert(1_099));
 // mil e noventa e nove
 ````````
